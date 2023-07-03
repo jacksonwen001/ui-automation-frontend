@@ -1,4 +1,3 @@
-import { ProjectResponse } from "@/api/project";
 import {
   Grid,
   Box,
@@ -8,15 +7,17 @@ import {
   CardActions,
 } from "@mui/material";
 import React from "react";
+
+import { ProjectResponse } from "@/api/project";
 import { DeleteProject } from "./DeleteProject";
 import { EditProject } from "./EditProject";
 
 export const ProjectItem = (props: ProjectResponse) => {
   const { id, name } = props;
   return (
-    <Grid item>
+    <Grid item xs={3}>
       <Box>
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 250 }}>
           <React.Fragment>
             <CardContent>
               <Typography variant="h6" component="div">

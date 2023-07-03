@@ -1,5 +1,3 @@
-import { Transition } from "@/components/Transitions";
-import { useCollapse } from "@/hooks/useCollapse";
 import { EditOutlined } from "@mui/icons-material";
 import {
   Button,
@@ -10,6 +8,9 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
+
+import { Transition } from "@/components/Transitions";
+import { useCollapse } from "@/hooks/useCollapse";
 import { useUpdateProject } from "../hooks/useEditProject";
 import { ProjectResponse } from "@/api/project";
 

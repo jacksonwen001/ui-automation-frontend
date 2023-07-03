@@ -24,7 +24,7 @@ export const AddProject = () => {
   };
 
   return (
-    <div>
+    <div className="ml-5">
       <Dialog open={visible} onClose={close} TransitionComponent={Transition}>
         <DialogTitle>Add Project</DialogTitle>
         <DialogContent>

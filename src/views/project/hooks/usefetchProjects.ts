@@ -3,7 +3,6 @@ import { QueryProjectRequest, queryProjectApi } from "@/api/project";
 import { useProjectState } from "../state/ProjectContext";
 import {
   setProjectAction,
-  setProjectTotalAction,
 } from "../state/ProjectActions";
 
 export const useFetchProjects = () => {

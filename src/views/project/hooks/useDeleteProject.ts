@@ -1,7 +1,8 @@
-import { deleteProjectApi } from "@/api/project";
-import { useCollapse } from "@/hooks/useCollapse";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+
+import { deleteProjectApi } from "@/api/project";
+import { useCollapse } from "@/hooks/useCollapse";
 import { useProjectState } from "../state/ProjectContext";
 import { reloadProjectsAction } from "../state/ProjectActions";
 

@@ -1,11 +1,11 @@
 import { Grid } from "@mui/material";
-import { useProjectState } from "../state/ProjectContext";
 
+import { useProjectState } from "../state/ProjectContext";
 import { ProjectItem } from "./ProjectItem";
 export const ProjectList = () => {
   const { projects } = useProjectState();
   return (
-    <Grid container gap={2} direction={"row"} columns={4}>
+    <Grid container direction={"row"} columns={12} spacing={2} className="overflow-auto">
       {projects.map((project) => (
         <ProjectItem key={project.id} {...project} />
       ))}
