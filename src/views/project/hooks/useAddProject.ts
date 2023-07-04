@@ -3,7 +3,9 @@ import { useSnackbar } from "notistack";
 
 import { CreateProjectRequest, createProjectApi } from "@/api/project";
 import { useProjectState } from "../state/ProjectContext";
-import { createProjectAction, reloadProjectsAction } from "../state/ProjectActions";
+import {
+  reloadProjectsAction,
+} from "../state/projectActions";
 
 export const useAddproject = () => {
   const { dispatch } = useProjectState();
@@ -15,12 +17,15 @@ export const useAddproject = () => {
   const submit = () => {
     createProjectApi(request)
       .then((res) => {
-        dispatch(createProjectAction(res));
-        dispatch(reloadProjectsAction())
-        enqueueSnackbar("created!");
-
+        dispatch(reloadProjectsAction());
+        enqueueSnackbar("created project success!", { variant: "success" });
       })
-      .catch((error) => enqueueSnackbar("error: " + error.response.statusText));
+      .catch((error) =>
+        enqueueSnackbar(
+          "create project failed. error: " + error.response.statusText,
+          { variant: "error" }
+        )
+      );
   };
 
   return { submit, setRequest };

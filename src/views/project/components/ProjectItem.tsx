@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Grid,
   Box,
@@ -6,21 +7,33 @@ import {
   Typography,
   CardActions,
 } from "@mui/material";
-import React from "react";
 
 import { ProjectResponse } from "@/api/project";
 import { DeleteProject } from "./DeleteProject";
 import { EditProject } from "./EditProject";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "usehooks-ts";
+import { STORAGE_PROJECT_ID } from "@/constants";
 
 export const ProjectItem = (props: ProjectResponse) => {
   const { id, name } = props;
+  const navigate = useNavigate();
+  const [, setStorage] = useLocalStorage<string | null>(
+    STORAGE_PROJECT_ID,
+    null
+  );
+  const goto = () => {
+    navigate("/dashboard");
+    setStorage(id);
+  };
+
   return (
     <Grid item xs={3}>
       <Box>
         <Card variant="outlined" sx={{ minWidth: 250 }}>
           <React.Fragment>
             <CardContent>
-              <Typography variant="h6" component="div">
+              <Typography variant="h6" component="div" onClick={goto}>
                 {name}
               </Typography>
               <Typography sx={{ md: "1.5" }} color="text.secondary">

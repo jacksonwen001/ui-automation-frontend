@@ -1,8 +1,8 @@
 import { PropsWithChildren, createContext } from "react";
-import { ProjectState, projectStateReducer } from "./ProjectReducer";
+import { ProjectState, projectStateReducer } from "./projectReducer";
 import { FC, useContext } from "react";
 import { useImmerReducer } from "use-immer";
-import { ProjectActions } from "./ProjectActions";
+import { ProjectActions } from "./projectActions";
 import { ProjectResponse } from "@/api/project";
 
 type ProjectContextProps = {

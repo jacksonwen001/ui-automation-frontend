@@ -2,7 +2,7 @@ import { updateProjectApi } from "@/api/project";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useProjectState } from "../state/ProjectContext";
-import { reloadProjectsAction } from "../state/ProjectActions";
+import { reloadProjectsAction } from "../state/projectActions";
 
 export const useUpdateProject = (id: string, name: string) => {
   const [projectName, setProjectName] = useState<string>(name);
@@ -13,11 +13,14 @@ export const useUpdateProject = (id: string, name: string) => {
   const update = () => {
     updateProjectApi(id, { name: projectName })
       .then(() => {
-        enqueueSnackbar("updated!");
+        enqueueSnackbar("updated project success!", { variant: "success" });
         dispatch(reloadProjectsAction());
       })
       .catch((err) => {
-        enqueueSnackbar("error: " + err.response.statusText);
+        enqueueSnackbar(
+          "update project failed. error: " + err.response.statusText,
+          { variant: "error" }
+        );
       });
   };
 

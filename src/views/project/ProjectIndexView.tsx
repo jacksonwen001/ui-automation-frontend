@@ -1,7 +1,7 @@
 import { Alert, CircularProgress, Grow, Pagination, Stack } from "@mui/material";
 
 import { ProjectList } from "./components/ProjectList";
-import { useFetchProjects } from "./hooks/usefetchProjects";
+import { useFetchProjects } from "./hooks/useFetchProjects";
 import { AddProject } from "./components/AddProject";
 import { usePagination } from "@/hooks/usePaginate";
 

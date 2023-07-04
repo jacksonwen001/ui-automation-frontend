@@ -1,10 +1,10 @@
-import { useSnackbar } from "notistack";
+import { OptionsObject, useSnackbar } from "notistack";
 import { useState } from "react";
 
 import { deleteProjectApi } from "@/api/project";
 import { useCollapse } from "@/hooks/useCollapse";
 import { useProjectState } from "../state/ProjectContext";
-import { reloadProjectsAction } from "../state/ProjectActions";
+import { reloadProjectsAction } from "../state/projectActions";
 
 export const useDeleteProject = (project_id: string) => {
   const [loading, setLoading] = useState(false);
@@ -17,11 +17,13 @@ export const useDeleteProject = (project_id: string) => {
     setLoading(true);
     deleteProjectApi(project_id)
       .then(() => {
-        enqueueSnackbar("delete project successful!");
+        enqueueSnackbar("delete project successful!", { variant: "success" });
         dispatch(reloadProjectsAction());
       })
       .catch((error) => {
-        enqueueSnackbar("error: " + error.response.statusText);
+        enqueueSnackbar("error: " + error.response.statusText, {
+          variant: "error",
+        });
       })
       .finally(() => {
         setLoading(false);

@@ -1,0 +1,1 @@
+export const STORAGE_PROJECT_ID = "PROJECT_ID"

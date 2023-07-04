@@ -1,25 +1,9 @@
 import {
   ProjectResponse,
-  QueryProjectsResponse,
   UpdateProjectRequest,
 } from "@/api/project";
 
 export type ProjectActions =
-  | {
-      type: "ADD_PROJECTS";
-      payload: ProjectResponse;
-    }
-  | {
-      type: "UPDATE_PROJECT";
-      payload: {
-        projectId: string;
-        request: UpdateProjectRequest;
-      };
-    }
-  | {
-      type: "DELETE_PROJECT";
-      payload: string;
-    }
   | {
       type: "SET_PROJECTS";
       payload: ProjectResponse[];
@@ -31,13 +15,6 @@ export type ProjectActions =
   | {
       type: "RELOAD";
     };
-
-export const createProjectAction = (
-  payload: ProjectResponse
-): ProjectActions => ({
-  type: "ADD_PROJECTS",
-  payload,
-});
 
 export const reloadProjectsAction = (): ProjectActions => ({
   type: "RELOAD",
@@ -55,18 +32,4 @@ export const setProjectTotalAction = (
   payload,
 });
 
-export const updateProjectAction = (
-  projectId: string,
-  request: UpdateProjectRequest
-): ProjectActions => ({
-  type: "UPDATE_PROJECT",
-  payload: {
-    projectId,
-    request,
-  },
-});
 
-export const removeProjectAction = (projectId: string): ProjectActions => ({
-  type: "DELETE_PROJECT",
-  payload: projectId,
-});

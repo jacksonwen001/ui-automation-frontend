@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { QueryProjectRequest, queryProjectApi } from "@/api/project";
 import { useProjectState } from "../state/ProjectContext";
-import {
-  setProjectAction,
-} from "../state/ProjectActions";
+import { setProjectAction } from "../state/projectActions";
 
 export const useFetchProjects = () => {
   const [params, setParams] = useState<QueryProjectRequest>({
@@ -28,7 +26,6 @@ export const useFetchProjects = () => {
       .catch((err) => {
         setisError(true);
         setErrorMessage(err);
-        console.log(err);
       });
   }, [params, reload]);
 
