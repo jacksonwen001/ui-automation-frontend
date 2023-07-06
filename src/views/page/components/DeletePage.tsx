@@ -27,10 +27,9 @@ import { useSnackbar } from "notistack";
 
 export const DeletePage = (page: PageResponse) => {
   const { visible, open, close } = useCollapse(false);
-  const { remove, loading } = useDeletePage(page);
+  const { remove } = useDeletePage(page);
   const [activeStep, setActiveStep] = useState(0);
   const [errorStep, setErrorStep] = useState(-1);
-  const [isQuering, setIsQuering] = useState(false);
   const [pageUsags, setPageUsags] = useState<QueryPageUsagesResponse>({
     used: true,
     scenarios: [],
@@ -44,9 +43,7 @@ export const DeletePage = (page: PageResponse) => {
   };
 
   const handleQuery = () => {
-    setIsQuering(true);
     queryPageUsagesApi(page.id).then((res) => {
-      setIsQuering(false);
       const nextStepIndex = activeStep + 1;
       setActiveStep(nextStepIndex);
       if (res.used) setErrorStep(nextStepIndex);
@@ -99,34 +96,36 @@ export const DeletePage = (page: PageResponse) => {
               );
             })}
           </Stepper>
-          {activeStep === steps.length ? (
-            <React.Fragment></React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                {activeStep == 0 && <>Do you wanna delete this page?</>}
-                {activeStep == 1 && (
-                  <>
-                    {pageUsags.used
-                      ? `this page was in used by ${pageUsags.scenarios.map(
-                          (it) => it
-                        )}`
-                      : "this page was not in used. You can delete it now"}
-                  </>
-                )}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                {activeStep === steps.length - 1 ? (
-                  <Button onClick={handleFinish}>
-                    {pageUsags.used ? "Cancel" : "Confirm"}
-                  </Button>
-                ) : (
-                  <Button onClick={handleQuery}>Query</Button>
-                )}
-              </Box>
-            </React.Fragment>
-          )}
+
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              {activeStep == 0 && (
+                <>
+                  Do you wanna delete this page? please query if this page is in
+                  used.
+                </>
+              )}
+              {activeStep == 1 && (
+                <>
+                  {pageUsags.used
+                    ? `this page was in used by ${pageUsags.scenarios.map(
+                        (it) => it
+                      )}`
+                    : "this page was not in used. You can delete it now"}
+                </>
+              )}
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Box sx={{ flex: "1 1 auto" }} />
+              {activeStep === steps.length - 1 ? (
+                <Button onClick={handleFinish}>
+                  {pageUsags.used ? "Cancel" : "Confirm"}
+                </Button>
+              ) : (
+                <Button onClick={handleQuery}>Query</Button>
+              )}
+            </Box>
+          </React.Fragment>
         </DialogContent>
       </Dialog>
       <IconButton onClick={open}>
