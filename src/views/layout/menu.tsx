@@ -2,13 +2,14 @@ import {
   BuildOutlined,
   FolderOpenOutlined,
   HomeOutlined,
+  ListOutlined,
   PersonOutlineOutlined,
   ReportOutlined,
   TextSnippetOutlined,
   UploadFileOutlined,
 } from "@mui/icons-material";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
-
+import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 
 export const menus = [
   {
@@ -50,5 +51,23 @@ export const menus = [
     title: 'Upload',
     link: '/upload', 
     icon: <UploadFileOutlined />
-  }
+  },
+  {
+    title: 'API',
+    link: '/interfaces', 
+    icon: <FilterDramaIcon />, 
+    children: [
+      {
+        title: 'API List',
+        link: '/interfaces/list', 
+        icon: <ListOutlined />
+      },
+      {
+        title: 'API Scenarios',
+        link: '/interfaces/scenarios', 
+        icon: <></>
+      }
+    ]
+  },
+
 ];

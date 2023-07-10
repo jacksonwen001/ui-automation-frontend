@@ -1,43 +1,56 @@
-import { useAppState } from "@/state/AppContext";
-import { List, ListItem, Typography } from "@mui/material";
-import classNames from "classnames";
-import { FC, PropsWithChildren } from "react";
+import { FC, ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { menus } from "./menu";
-import logo from "../../assets/logo.png";
-import { Height } from "@mui/icons-material";
+import {
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import classNames from "classnames";
 import { nanoid } from "nanoid";
 
-const Item: FC<PropsWithChildren & { title: string; link: string }> = ({
-  children,
-  title,
-  link,
-}) => {
+import { useAppState } from "@/state/AppContext";
+import { menus } from "./menu";
+import logo from "../../assets/logo.png";
+
+const Item: FC<{
+  menu: { title: string; link: string; icon: ReactNode; children?: any[] };
+}> = ({ menu }) => {
   const { collapse } = useAppState();
   const localtion = useLocation();
   const navigate = useNavigate();
-  return (
-    <ListItem
-      className={classNames(
-        "flex items-center justify-center gap-3  hover:bg-gray-200 rounded cursor-pointer w-full text-center",
-        link && localtion.pathname.includes(link)
-          ? "bg-gray-300 border-r-8 border-blue-500"
-          : "bg-none border-none"
-      )}
-      onClick={() => navigate(link)}
-    >
-      <i className="ml-3">{children}</i>
-      <Typography
-        fontSize="large"
-        className={classNames(
-          "transition-all duration-50 ease-linear",
-          collapse && "invisible"
-        )}
+  const { link, title, icon, children } = menu;
+
+  let listItem = (
+    <>
+      <ListItemButton
+        sx={{
+          borderRight: localtion.pathname.includes(link)
+            ? "8px #1976d2 solid"
+            : "none",
+          backgroundColor: localtion.pathname.includes(link)
+            ? "#cfd8dc"
+            : "none",
+        }}
+        onClick={() => navigate(link)}
       >
-        {title}
-      </Typography>
-    </ListItem>
+        <ListItemIcon className="ml-3">{icon}</ListItemIcon>
+        <Typography
+          fontSize="large"
+          className={classNames(
+            "transition-all duration-50 ease-linear",
+            collapse && "hidden"
+          )}
+        >
+          {title}
+        </Typography>
+      </ListItemButton>
+    </>
   );
+
+  return listItem;
 };
 
 export const SiderBar = () => {
@@ -52,7 +65,7 @@ export const SiderBar = () => {
     >
       <header
         className={classNames(
-          "cursor-pointer flex px-8 gap-3 items-center justify-start h-20",
+          "cursor-pointer flex px-8 gap-3 items-center justify-start h-20"
         )}
         onClick={() => navigate("/")}
       >
@@ -72,9 +85,7 @@ export const SiderBar = () => {
         <div className="">
           <List className="space-y-3">
             {menus.map((menu) => (
-              <Item title={menu.title} link={menu.link} key={nanoid()}>
-                {menu.icon}
-              </Item>
+              <Item menu={menu} key={nanoid()} />
             ))}
           </List>
         </div>

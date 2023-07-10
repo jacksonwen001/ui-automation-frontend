@@ -2,6 +2,8 @@ import { CreatePageRequest, createPageApi } from "@/api/page";
 import { useProjectId } from "@/hooks/useProjectId";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+import { usePageState } from "../states/PageContext";
+import { toggleReloadPage } from "../states/pageActions";
 
 export const useAddPage = () => {
   const project_id = useProjectId();
@@ -10,9 +12,10 @@ export const useAddPage = () => {
     name: "",
   });
   const setRequestData = (key: string, value: string) => setRequest({...request, [key]: value})
-
+  const { dispatch } = usePageState()
   const [loading, setloading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+
 
   const add = () => {
     if (!request.name)
@@ -21,6 +24,7 @@ export const useAddPage = () => {
     createPageApi(request)
       .then(() => {
         enqueueSnackbar("create page success", { variant: "success" });
+        dispatch(toggleReloadPage())
       })
       .catch((error) =>
         enqueueSnackbar(

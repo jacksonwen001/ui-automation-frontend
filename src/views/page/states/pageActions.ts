@@ -10,5 +10,9 @@ export type PageActions =
       payload: number;
     }
   | {
-      type: "RELOAD";
+      type: "TOGGLE_RELOAD_PAGE";
     };
+
+export const toggleReloadPage = (): PageActions => ({
+  type: "TOGGLE_RELOAD_PAGE",
+});

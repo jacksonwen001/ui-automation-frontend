@@ -6,6 +6,9 @@ import { PageIndexView } from "@/views/page/PageIndexView";
 import { ScenarioIndexView } from "@/views/scenario/ScenarioIndexView";
 import { SuiteIndexView } from "@/views/suite/SuiteIndexView";
 import { Layout } from "@/views/layout/Layout";
+import { PageContextProvider } from "@/views/page/states/PageContext";
+import { APIIndexView } from "@/views/apis/APIIndexView";
+import { CreateAPIView } from "@/views/apis/CreateAPIView";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +28,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/pages",
-        element: <PageIndexView />,
+        element: (
+          <PageContextProvider>
+            <PageIndexView />
+          </PageContextProvider>
+        ),
       },
       {
         path: "/scenarios",
@@ -35,6 +42,17 @@ export const router = createBrowserRouter([
         path: "/suites",
         element: <SuiteIndexView />,
       },
+      {
+        path: "/interfaces",
+        element: <APIIndexView />,
+        children: [
+          {
+            path: 'create', 
+            element: <CreateAPIView />
+          }
+        ]
+      },
+    
     ],
   },
 ]);

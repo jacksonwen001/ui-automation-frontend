@@ -10,6 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 
 import { useFetchPages } from "../hooks/useFetchPages";
@@ -51,27 +52,40 @@ export const ListPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pages.map((page) => (
-              <TableRow key={nanoid()}>
-                {columns.map((column) => (
-                  <TableCell key={nanoid()}>
-                    {page[column as keyof PageResponse]}
-                  </TableCell>
-                ))}
-
-                <TableCell>
-                  <div>
-                    <EditPage {...page} />
-                    <DeletePage {...page} />
-                  </div>
+            {total === 0 ? (
+              <TableRow>
+                <TableCell rowSpan={3} colSpan={3} >
+                  <Typography className="text-center text-gray-500">No data</Typography>
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              <>
+                {pages.map((page) => (
+                  <TableRow key={nanoid()}>
+                    {columns.map((column) => (
+                      <TableCell key={nanoid()}>
+                        {page[column as keyof PageResponse]}
+                      </TableCell>
+                    ))}
+
+                    <TableCell>
+                      <div>
+                        <EditPage {...page} />
+                        <DeletePage {...page} />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       <div className="w-full flex justify-end">
-        <Pagination count={range.length} page={params.current} />
+        <Pagination count={range.length} page={params.current} hidden={total === 0} onChange={(_,current) => setParams({
+          ...params, 
+          current
+        })}/>
       </div>
     </>
   );

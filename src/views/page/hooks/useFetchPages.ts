@@ -2,6 +2,7 @@ import { PageResponse, QueryPageRequest, queryPagesApi } from "@/api/page";
 import { useProjectId } from "@/hooks/useProjectId";
 import { useQueryStatus } from "@/hooks/useQueryStatus";
 import { useEffect, useState } from "react";
+import { usePageState } from "../states/PageContext";
 
 export const useFetchPages = () => {
   const [pages, setPages] = useState<PageResponse[]>([])
@@ -15,10 +16,11 @@ export const useFetchPages = () => {
     setErrorMessage,
   } = useQueryStatus();
   const project_id = useProjectId();
+  const {reload} = usePageState()
   const [params, setParams] = useState<QueryPageRequest>({
     project_id,
     current: 1,
-    size: 10,
+    size: 5,
   });
   useEffect(() => {
     setIsLoading(true);
@@ -32,6 +34,6 @@ export const useFetchPages = () => {
         setIsError(true);
         setErrorMessage(error);
       });
-  }, [params]);
+  }, [params, reload]);
   return { isLoading, isError, errorMessage, pages, total, params, setParams };
 };
